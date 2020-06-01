@@ -17,17 +17,8 @@ input.sources[solFile] = {
 };
 
 const output = JSON.parse(solc.compile(JSON.stringify(input)));
-// `output` here contains the JSON output as specified in the documentation
-for (var contractName in output.contracts[solFile]) {
-  // bytecode
-  console.log(
-      contractName + ': ' +
-      output.contracts[solFile][contractName].evm.bytecode.object);
 
-  // ABI
-  for (const intf of output.contracts[solFile][contractName].abi) {
-    console.log(intf);
-  }
-}
-
-module.exports = output.contracts[solFile]['Greetings'];
+module.exports = {
+  interface: output.contracts[solFile]['Greetings'].abi,
+  bytecode: output.contracts[solFile]['Greetings'].evm.bytecode.object,
+};
