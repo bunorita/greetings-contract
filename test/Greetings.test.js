@@ -21,4 +21,18 @@ describe('Greetings', () => {
     console.log(greetings);
     assert.ok(greetings.options.address)
   });
+
+  it('has a default message', async () => {
+    const message = await greetings.methods.message().call();
+    assert.equal(message, 'Hello World');
+  });
+
+
+  it('can chage the message', async () => {
+    await greetings.methods.setMessage('May the force be with you').send({
+      from: accounts[0]
+    });
+    const message = await greetings.methods.message().call();
+    assert.equal(message, 'May the force be with you');
+  });
 });
